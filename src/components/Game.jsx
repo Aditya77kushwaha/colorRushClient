@@ -30,8 +30,6 @@ const Game = ({ host }) => {
 
   return (
     <div>
-      <h1>Game</h1>
-
       {!isColorChosen && room?.sessionId === host ? (
         <Colors />
       ) : (
@@ -39,8 +37,14 @@ const Game = ({ host }) => {
           {room?.sessionId !== host && !givenHints && (
             <h1>Waiting for host to give hints</h1>
           )}
-          {givenHints && <p>Hints by host : {hints}</p>}
-          {/* {hints} */}
+          {room?.sessionId === host ? (
+            <h3>Awaiting Guesses</h3>
+          ) : (
+            <h3>Guess the color</h3>
+          )}
+          {room?.sessionId !== host && givenHints && (
+            <b>Hints by host : {hints}</b>
+          )}
           {room?.sessionId === host && !givenHints && (
             <Clues
               hint={hint}
