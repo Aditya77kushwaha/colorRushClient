@@ -3,8 +3,7 @@ import { GameContext } from "../store/GameContext";
 import * as Colyseus from "colyseus.js";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import "../components/game.css"
-
+import "../components/game.css";
 
 function Home() {
   const { client, setClient, setRoom } = useContext(GameContext);
@@ -43,7 +42,9 @@ function Home() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function createClient() {
-    const colyseusClient = new Colyseus.Client("ws://localhost:2567");
+    const colyseusClient = new Colyseus.Client(
+      "wss://color-rush-backend.herokuapp.com/"
+    );
     setClient(colyseusClient);
     console.log("client created", colyseusClient, client);
     return colyseusClient;
