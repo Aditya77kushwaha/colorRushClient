@@ -1,0 +1,128 @@
+$black: #000;
+$white: #fff;
+
+.hintsDisplay {
+  display: flex;
+  justify-content: end;
+  div {
+    background-color: $white;
+    padding: 0.3vw 2vw;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/1;
+      background-color: $white;
+      top: 0;
+      left: 0;
+      clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+      transform: translateX(-50%);
+      border: none;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/1;
+      background-color: $white;
+      top: 0;
+      right: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+      transform: translateX(49%);
+      border: none;
+    }
+  }
+  margin-bottom: 3vw;
+}
+
+.cluesScreen {
+  position: relative;
+  background: $black;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+.chosenColor {
+  width: 18vw;
+  height: 15.58vw;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.hints {
+  width: 40vw;
+  margin: 5vw auto auto;
+  input {
+    width: 100%;
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+  }
+  .hintsBtn {
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+  }
+  .addHintsBtn {
+    border: none;
+    padding: 0.3vw 2vw;
+    position: relative;
+    background-color: $white;
+    transform: translateX(0.8vw);
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/2;
+      background-color: $white;
+      top: 0;
+      left: 0;
+      clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+      transform: translateX(-50%);
+      border: none;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/2;
+      background-color: $white;
+      top: 0;
+      right: 0;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+      transform: translateX(49%);
+      border: none;
+    }
+  }
+  .submitHintsBtn {
+    border: none;
+    padding: 0.3vw 2vw;
+    position: relative;
+    background-color: $white;
+    transform: translateX(-0.8vw);
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/2;
+      background-color: $white;
+      top: 0;
+      left: 0;
+      clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+      transform: translateX(-50%);
+      border: none;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      aspect-ratio: 1/2;
+      background-color: $white;
+      top: 0;
+      right: 0;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+      transform: translateX(49%);
+      border: none;
+    }
+  }
+}

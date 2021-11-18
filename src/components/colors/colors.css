@@ -1,0 +1,110 @@
+.chooseColorScreen {
+  position: relative;
+  background: #000;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+
+.heading {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  margin-bottom: 2vw;
+  padding: 0.5vw 3vw;
+  width: 30vw;
+  border: none;
+}
+
+.heading::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+
+.heading::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+  -webkit-transform: translateX(49%);
+          transform: translateX(49%);
+  border: none;
+}
+
+.heading h3 {
+  padding: unset;
+}
+
+.colorOption {
+  width: 12vw;
+  height: 10.39vw;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+          clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.timeBarWrapper {
+  margin-top: 4vw;
+  margin-bottom: 4vw;
+  height: 3vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.timeBarWrapper .timeBar {
+  background-color: #fff;
+  width: 87%;
+  height: 100%;
+}
+
+.timeBarWrapper .timeBar .timeProgress {
+  height: 100%;
+  width: 100%;
+  background: -webkit-gradient(linear, left top, right top, from(#f00), color-stop(#ff0), color-stop(#0f0), color-stop(#0ff), color-stop(#00f), color-stop(#f0f), to(#f00));
+  background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  -webkit-animation: progress 10s;
+          animation: progress 10s;
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+/*# sourceMappingURL=colors.css.map */

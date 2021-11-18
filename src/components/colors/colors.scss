@@ -1,0 +1,90 @@
+$black: #000;
+$white: #fff;
+
+.chooseColorScreen {
+  position: relative;
+  background: $black;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+.heading {
+  position: relative;
+  display: inline-block;
+  background: $white;
+  margin-bottom: 2vw;
+  padding: 0.5vw 3vw;
+  width: 30vw;
+  border: none;
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: $white;
+    top: 0;
+    left: 0;
+    clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+    transform: translateX(-50%);
+    border: none;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: $white;
+    top: 0;
+    right: 0;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+    transform: translateX(49%);
+    border: none;
+  }
+  h3 {
+    padding: unset;
+  }
+}
+.colorOption {
+  width: 12vw;
+  height: 10.39vw;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.timeBarWrapper {
+  margin-top: 4vw;
+  margin-bottom: 4vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  .timeBar {
+    background-color: $white;
+    width: 87%;
+    height: 100%;
+    .timeProgress {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(
+        90deg,
+        #f00,
+        #ff0,
+        #0f0,
+        #0ff,
+        #00f,
+        #f0f,
+        #f00
+      );
+      animation: progress 10s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

@@ -1,0 +1,44 @@
+.game {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.room-code {
+  cursor: pointer;
+}
+
+.leave-btn{
+  position: relative;
+  z-index: 10;
+}
+.player-color-block {
+  vertical-align: middle;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.disconnected {
+  filter: grayscale(100%);
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.toggle {
+  top: 10px;
+  float: right;
+  position: fixed;
+  margin: 10px;
+  z-index: 1000;
+}
+.wrapper {
+  position: relative;
+}
+.players {
+  position: absolute;
+  top: 100px;
+  right: 0;
+}

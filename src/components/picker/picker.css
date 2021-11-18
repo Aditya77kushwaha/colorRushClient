@@ -1,0 +1,17 @@
+.canvasContainer {
+  position: relative;
+}
+
+.canvasContainer .picker-canvas {
+  cursor: pointer;
+}
+
+.canvasContainer .marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+}
+/*# sourceMappingURL=picker.css.map */

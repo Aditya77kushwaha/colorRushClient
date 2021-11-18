@@ -1,0 +1,157 @@
+.hintsDisplay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  margin-bottom: 3vw;
+}
+
+.hintsDisplay div {
+  background-color: #fff;
+  padding: 0.3vw 2vw;
+  position: relative;
+}
+
+.hintsDisplay div::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+
+.hintsDisplay div::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+  -webkit-transform: translateX(49%);
+          transform: translateX(49%);
+  border: none;
+}
+
+.cluesScreen {
+  position: relative;
+  background: #000;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+
+.chosenColor {
+  width: 18vw;
+  height: 15.58vw;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+          clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.hints {
+  width: 40vw;
+  margin: 5vw auto auto;
+}
+
+.hints input {
+  width: 100%;
+  padding-top: 0.8vw;
+  padding-bottom: 0.8vw;
+}
+
+.hints .hintsBtn {
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+}
+
+.hints .addHintsBtn {
+  border: none;
+  padding: 0.3vw 2vw;
+  position: relative;
+  background-color: #fff;
+  -webkit-transform: translateX(0.8vw);
+          transform: translateX(0.8vw);
+}
+
+.hints .addHintsBtn::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/2;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+
+.hints .addHintsBtn::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/2;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+  -webkit-transform: translateX(49%);
+          transform: translateX(49%);
+  border: none;
+}
+
+.hints .submitHintsBtn {
+  border: none;
+  padding: 0.3vw 2vw;
+  position: relative;
+  background-color: #fff;
+  -webkit-transform: translateX(-0.8vw);
+          transform: translateX(-0.8vw);
+}
+
+.hints .submitHintsBtn::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/2;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 75%, 0% 25%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+
+.hints .submitHintsBtn::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/2;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%);
+  -webkit-transform: translateX(49%);
+          transform: translateX(49%);
+  border: none;
+}
+/*# sourceMappingURL=clues.css.map */
