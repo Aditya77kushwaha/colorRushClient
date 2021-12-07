@@ -40,7 +40,7 @@ const Game = ({ host }) => {
           {room?.sessionId === host && givenHints ? (
             <h3>Awaiting Guesses</h3>
           ) : (
-            room?.sessionId !== host && <h3>Guess the color</h3>
+            room?.sessionId !== host && givenHints && <h3>Guess the color</h3>
           )}
           {room?.sessionId !== host && givenHints && (
             <b>Hints by host : {hints}</b>
@@ -57,7 +57,7 @@ const Game = ({ host }) => {
           )}
         </>
       )}
-      {givenHints ? <Picker /> : ""}
+      {room?.sessionId !== host && givenHints ? <Picker /> : ""}
     </div>
   );
 };
