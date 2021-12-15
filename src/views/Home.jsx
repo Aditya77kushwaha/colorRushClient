@@ -8,8 +8,8 @@ import "../components/game.css";
 function Home() {
   const { client, setClient, setRoom } = useContext(GameContext);
   const history = useHistory();
-  const [nameInput, setNameInput] = useState("");
-  const [maxPlayersInput, setMaxPlayersInput] = useState(2);
+  const [nameInput, setNameInput] = useState("player");
+  const [maxPlayersInput, setMaxPlayersInput] = useState(1);
   const [isCreateDisabled, setIsCreateDisabled] = useState(false);
   const gameData = JSON.parse(localStorage.getItem("gameData"));
 
@@ -42,9 +42,7 @@ function Home() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function createClient() {
-    const colyseusClient = new Colyseus.Client(
-      "wss://color-rush-backend.herokuapp.com/"
-    );
+    const colyseusClient = new Colyseus.Client("ws://localhost:2567");
     setClient(colyseusClient);
     console.log("client created", colyseusClient, client);
     return colyseusClient;
@@ -80,7 +78,7 @@ function Home() {
         <div className="gameForm">
           <div className="gameFormPlayerDetails">
             <label htmlFor="name" className="form-label">
-              Enter your name{" "}
+              Enter your name{" "} 
             </label>
             <input
               id="name"
@@ -94,7 +92,7 @@ function Home() {
           <div className="gameFormJoinRoom d-flex justify-content-around mt-4">
             <div className="w-100 pe-5">
               <label className="form-label" htmlFor="max-players">
-                Max players
+                Maximum players <small>(excluding host)</small>
               </label>
               <input
                 id="max-players"

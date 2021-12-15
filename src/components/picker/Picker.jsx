@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import myColorPickerImage from "../img/myColorPickerImage.png";
 import "./picker.css";
-function Picker() {
+import { GameContext } from "../../store/GameContext";
+
+function Picker({ setScore, score }) {
+  const { room } = useContext(GameContext);
+
   let ctx;
 
   const originalColor = useSelector((state) => state.colors.chosenColor);
@@ -77,7 +81,15 @@ function Picker() {
     let hsv = rgbTohsv(rgba[0], rgba[1], rgba[2]);
 
     console.log(hsv);
-    setDistance(calcDst(hsv));
+    let sc = calcDst(hsv),
+      scr;
+    if (sc < 10) scr = 3;
+    else if (sc >= 10 && sc < 20) scr = 2;
+    else if (sc >= 20 && sc < 30) scr = 1;
+    else if (sc >= 30) scr = 0;
+    setDistance(sc);
+    setScore(scr);
+    room.send("set-player-score", scr);
   };
   useEffect(() => {
     ctx = pickerRef.current.getContext("2d");

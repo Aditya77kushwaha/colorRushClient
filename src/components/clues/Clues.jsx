@@ -13,11 +13,31 @@ const Clues = ({
 }) => {
   const { room } = useContext(GameContext);
   const chosenColor = useSelector((state) => state.colors.chosenColor);
+  // const [hintArray, setHintArray] = useState([]);
   const handleHintAdd = () => {
-    setHints((prevVal) => [...prevVal, hints.length !== 0 ? "," + hint : hint]);
+    console.log(hint);
+    // let len = hint.split(" ");
+    // len = len.filter((ele, pos, self) => {
+    //   return ele !== "";
+    // });
+    if (
+      hints.findIndex(
+        (x) => x.trim().toUpperCase() === hint.trim().toUpperCase()
+      ) === -1 &&
+      hint.trim().toUpperCase().split(" ").length <= 3
+    ) {
+      setHints((prevVal) => [...prevVal, hint.trim().toUpperCase()]);
+    }
+    // hintArray += hints.length !== 0 ? "," + hint : hint;
+    // setHintArray(
+    //   hints.map((val, ind) => {
+    //     return ind !== 0 ? val : "," + val;
+    //   })
+    // );
     setHint("");
   };
   const handleGiveHints = () => {
+    setHints(hints.filter((v, i, a) => a.indexOf(v) === i));
     room.send("give-hints", hints);
     setGivenHints(!givenHints);
   };
@@ -25,7 +45,16 @@ const Clues = ({
     <>
       <div className="cluesScreen container">
         <div className="hintsDisplay">
-          <div>Hints : {hints}</div>{" "}
+          <div className="d-flex">
+            Hints :{" "}
+            {hints.map((val, id) => {
+              return (
+                <li style={{ listStyle: "none" }} key={id}>
+                  {val + ","}
+                </li>
+              );
+            })}
+          </div>
         </div>
         <div className="d-flex text-center justify-content-center">
           <div className="heading">
@@ -58,7 +87,7 @@ const Clues = ({
                 </button>
               </div>
               <div className="col-12 col-sm-6 d-flex justify-content-end">
-                <button className="submitHintsBtn" onClick={handleGiveHints}>
+                <button disabled={!hints.length} className="submitHintsBtn" onClick={handleGiveHints}>
                   Submit
                 </button>
               </div>

@@ -14,11 +14,12 @@ const Team = ({
 }) => {
   const { room, client } = useContext(GameContext);
   const [chosen, setChosen] = useState(false);
+  const [hasEveryoneJoinedTeam, setHasEveryoneJoinedTeam] = useState(false);
+  const [disableTeamJoin, setDisableTeamJoin] = useState([]);
   useEffect(() => {
-    // room.state.teams.onChange = (x, y) => {
-    //   console.log("teams...");
-    //   console.log(x, y);
-    // };
+    room.onMessage("everyone-joined-team", (msg) => {
+      setHasEveryoneJoinedTeam(true);
+    });
     room.state.players.onChange = (player, sessionId) => {
       setPlayers((prevPlayers) => ({
         ...prevPlayers,
@@ -31,8 +32,10 @@ const Team = ({
           setPlayers((prevPlayers) => {
             const newPlayersState = { ...prevPlayers };
             newPlayersState[sessionId][change.field] = change.value;
-            // if (change.field === "team" && client.id === sessionId)
-            //   setTeamsName(change.value);
+            if (change.field === "team" && client.id === sessionId) {
+              setTeamsName(change.value);
+              // setChosen(true);
+            }
             return newPlayersState;
           });
         });
@@ -41,8 +44,16 @@ const Team = ({
     };
     room.onMessage("join-teams", (msg) => {
       console.log("Formed teams...");
-      console.log(msg);
+      // console.log("disableTeamJoin", disableTeamJoin);
       setTeamsData(msg);
+    });
+    room.onMessage("joined-team", (msg) => {
+      setChosen(true);
+      setTeamsName("Team " + msg);
+    });
+    room.onMessage("cant-join-teams", (msg) => {
+      setDisableTeamJoin((prevVal) => [...prevVal, msg]);
+      console.log("disableTeamJoin", disableTeamJoin);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -57,6 +68,7 @@ const Team = ({
               setHasTeamsFormed(true);
               room.send("teams-formed", true);
             }}
+            disabled={!hasEveryoneJoinedTeam}
           >
             Create
           </button>
@@ -66,16 +78,15 @@ const Team = ({
         return (
           <button
             className="btn btn-sm"
-            disabled={chosen}
+            disabled={chosen || room.sessionId === host}
             style={{ display: "flex", flexDirection: "column" }}
           >
             <li
               className="list-group-item"
               key={id}
+              // disabled={disableTeamJoin.includes(id)}
               onClick={() => {
                 room.send("join-team", id);
-                setChosen(true);
-                setTeamsName("Team " + id);
               }}
             >
               Team {id} {arr}

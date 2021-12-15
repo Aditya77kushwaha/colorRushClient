@@ -10,9 +10,10 @@ import Team from "../components/Team";
 const GameView = () => {
   const history = useHistory();
   const [username, setUsername] = useState("");
-  const { room, setRoom, client } = useContext(GameContext);
+  const { room, setRoom } = useContext(GameContext);
   const [players, setPlayers] = useState({});
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [hasEveryoneJoined, setHasEveryoneJoined] = useState(false);
   const [host, setHost] = useState(null);
   const [roundLimit, setRoundLimit] = useState(2);
   const [timeLimit, setTimeLimit] = useState(3);
@@ -23,6 +24,7 @@ const GameView = () => {
   const [hasTeamsFormed, setHasTeamsFormed] = useState(false);
   const [teamsData, setTeamsData] = useState({});
   const [teamsName, setTeamsName] = useState("");
+  const [score, setScore] = useState(0);
 
   function copyRoomCode() {
     const input = document.createElement("input");
@@ -53,6 +55,12 @@ const GameView = () => {
       console.log(msg);
       setTeamsData(msg);
     });
+    room.onMessage("everyone-joined", (msg) => {
+      setHasEveryoneJoined(true);
+    });
+    room.onMessage("someone-left", (msg) => {
+      setHasEveryoneJoined(false);
+    });
     room.state.messages.onAdd = (msg, length) => {
       // console.log(x, y);
       console.log(msg);
@@ -78,8 +86,11 @@ const GameView = () => {
             newPlayersState[sessionId][change.field] = change.value;
             if (change.field === "team" && sessionId === room.sessionId) {
               console.log("Change team event...");
-              console.log(client.id, sessionId);
+              // console.log(client.id, sessionId);
               setTeamsName(change.value);
+            }
+            if (change.field === "score") {
+              setScore(change.value);
             }
             return newPlayersState;
           });
@@ -172,15 +183,26 @@ const GameView = () => {
               <p onClick={copyRoomCode} className="room-code me-2">
                 <b>Room Code :</b> {room.id}{" "}
               </p>
-              <p className="room-code me-2">
-                <b>Team :</b> {teamsName ? teamsName : "Not Joined"}{" "}
-              </p>
+              {room.sessionId !== host && (
+                <>
+                  <p className="me-2">
+                    <b>Host :</b> {room.state.players[host]?.username}{" "}
+                  </p>
+                  <p className="me-2">
+                    <b>Team :</b> {teamsName ? teamsName : "Not Joined"}{" "}
+                  </p>
+                  <p className="me-2">
+                    <b>Score :</b> {score}{" "}
+                  </p>
+                </>
+              )}
               <div
                 className={
                   room?.sessionId === host && !isGameStarted ? "show" : "hide"
                 }
               >
                 <button
+                  disabled={!hasEveryoneJoined}
                   className="btn btn-sm btn-primary mt-1 mb-1"
                   onClick={() => {
                     handleGameStart();
@@ -281,7 +303,7 @@ const GameView = () => {
           </div>
           {isGameStarted &&
             (hasTeamsFormed ? (
-              <Game host={host} />
+              <Game host={host} setScore={setScore} score={score} />
             ) : (
               <Team
                 hasTeamsFormed={hasTeamsFormed}
