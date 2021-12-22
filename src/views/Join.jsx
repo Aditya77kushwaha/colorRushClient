@@ -42,9 +42,7 @@ function Home() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function createClient() {
-    const colyseusClient = new Colyseus.Client(
-      "ws://localhost:2567"
-    );
+    const colyseusClient = new Colyseus.Client("ws://localhost:2567");
     setClient(colyseusClient);
     console.log("client created", colyseusClient, client);
 

@@ -78,7 +78,7 @@ function Home() {
         <div className="gameForm">
           <div className="gameFormPlayerDetails">
             <label htmlFor="name" className="form-label">
-              Enter your name{" "} 
+              Enter your name{" "}
             </label>
             <input
               id="name"
