@@ -7,6 +7,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import GuardedRoute from "./views/GuardedRoute";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import Info from "./views/Info";
+import CreateAsFacilitator from "./views/CreateAsFacilitator";
+import CreateAsHost from "./views/CreateAsHost";
 
 function App() {
   return (
@@ -18,6 +21,12 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/join/:roomCode?" component={Join} />
+              <Route
+                path="/create-as-facilitator"
+                component={CreateAsFacilitator}
+              />
+              <Route path="/create-as-host" component={CreateAsHost} />
+              <Route path="/info" component={Info} />
 
               <GuardedRoute path="/game" component={GameView} />
             </Switch>

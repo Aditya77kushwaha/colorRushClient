@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GameContext } from "../store/GameContext";
+import "./game.css";
+import "./team.css";
 
 // players would form teams here
 const Team = ({
@@ -11,11 +13,16 @@ const Team = ({
   players,
   setPlayers,
   setTeamsName,
+  rushers,
+  clueGivers,
+  setRushers,
+  setClueGivers,
 }) => {
   const { room, client } = useContext(GameContext);
   const [chosen, setChosen] = useState(false);
   const [hasEveryoneJoinedTeam, setHasEveryoneJoinedTeam] = useState(false);
   const [disableTeamJoin, setDisableTeamJoin] = useState([]);
+  // const [rushers, setRushers] = useState([]);
   useEffect(() => {
     room.onMessage("everyone-joined-team", (msg) => {
       setHasEveryoneJoinedTeam(true);
@@ -59,41 +66,172 @@ const Team = ({
   }, []);
   return (
     <>
-      <p>
-        <h1>Form teams</h1>
-        {room?.sessionId === host && (
+      <div className="teamPageHeader text-center py-3">
+        <h2>Join Your Team</h2>
+      </div>
+
+      {/* {room?.sessionId === host && (
+        <button
+          className="btn btn-sm btn-primary"
+          onClick={() => {
+            setHasTeamsFormed(true);
+            let cluegivers = [];
+            cluegivers = Object.keys(players)?.filter((id) => {
+              return (
+                !rushers.includes(players[id]?.username) &&
+                players[id]?.username
+                // setClueGivers((prevVal) => [
+                //   ...prevVal,
+                //   players[id]?.username,
+                // ])
+              );
+            });
+            // setClueGivers(cluegivers);
+
+            console.log("Rushers are", rushers);
+            console.log("clue givers are", cluegivers);
+            room.send("teams-formed", {
+              rushers: rushers,
+              clueGivers: cluegivers,
+            });
+          }}
+          disabled={!hasEveryoneJoinedTeam}
+        >
+          Create
+        </button>
+      )} */}
+      <div className="container-fluid">
+        <div className="row my-3">
+          {teamsData?.teams?.map((arr, id) => {
+            return (
+              <div
+                className="col-sm-4 mt-3"
+                disabled={chosen && room.sessionId !== host}
+                style={{ display: "flex", flexDirection: "column" }}
+                key={id}
+              >
+                <div className="teamDiv">
+                  <div
+                    className="teamHeader"
+                    key={id}
+                    // disabled={disableTeamJoin.includes(id)}
+                    onClick={() => {
+                      if (room.sessionId !== host && !chosen)
+                        room.send("join-team", id);
+                    }}
+                  >
+                    <h3>Team {id + 1}</h3>
+                    <small style={{ fontWeight: "700" }}>
+                      {room.sessionId === host &&
+                        `(choose ${Math.floor(
+                          arr.length / 2
+                        )} or more rushers)`}
+                    </small>
+                    <br />
+                    {arr.map((rusher, idx) => {
+                      return (
+                        <div
+                          className={`room-code ${
+                            rushers.includes(rusher) && "text-danger"
+                          }`}
+                          onClick={() => {
+                            if (room.sessionId === host)
+                              setRushers((prevVal) => [...prevVal, rusher]);
+                          }}
+                          key={idx}
+                        >
+                          {rusher}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* <ul className="players-list">
+                    {arr.map((player, index) => (
+                      <li key={index}>{player}</li>
+                    ))}
+                  </ul> */}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {room?.sessionId === host && (
+        <div className="text-center">
           <button
-            className="btn btn-sm btn-primary"
+            className="cr-btn"
             onClick={() => {
               setHasTeamsFormed(true);
-              room.send("teams-formed", true);
+              let cluegivers = [];
+              cluegivers = Object.keys(players)?.filter((id) => {
+                return (
+                  !rushers.includes(players[id]?.username) &&
+                  players[id]?.username
+                  // setClueGivers((prevVal) => [
+                  //   ...prevVal,
+                  //   players[id]?.username,
+                  // ])
+                );
+              });
+              // setClueGivers(cluegivers);
+
+              console.log("Rushers are", rushers);
+              console.log("clue givers are", cluegivers);
+              room.send("teams-formed", {
+                rushers: rushers,
+                clueGivers: cluegivers,
+              });
             }}
             disabled={!hasEveryoneJoinedTeam}
           >
-            Create
+            Start Game
           </button>
-        )}
-      </p>
-      {teamsData?.teams?.map((arr, id) => {
+        </div>
+      )}
+
+      {/* {teamsData?.teams?.map((arr, id) => {
         return (
-          <button
-            className="btn btn-sm"
-            disabled={chosen || room.sessionId === host}
-            style={{ display: "flex", flexDirection: "column" }}
+          <div
+            className="player-squares-container"
+            disabled={chosen && room.sessionId !== host}
+            style={{ display: "flex", flexWrap: "wrap" }}
           >
             <li
               className="list-group-item"
               key={id}
               // disabled={disableTeamJoin.includes(id)}
               onClick={() => {
-                room.send("join-team", id);
+                if (room.sessionId !== host && !chosen)
+                  room.send("join-team", id);
               }}
+              style={{ minWidth: "250px" }}
             >
-              Team {id} {arr}
+              Team {id}{" "}
+              <small style={{ fontWeight: "700" }}>
+                {room.sessionId === host &&
+                  `(choose ${Math.floor(arr.length / 2)} or more rushers)`}
+              </small>
+              <br />
+              {arr.map((rusher, idx) => {
+                return (
+                  <div
+                    className={`room-code ${
+                      rushers.includes(rusher) && "text-danger"
+                    }`}
+                    onClick={() => {
+                      if (room.sessionId === host)
+                        setRushers((prevVal) => [...prevVal, rusher]);
+                    }}
+                    key={idx}
+                  >
+                    {rusher}
+                  </div>
+                );
+              })}
             </li>
-          </button>
+          </div>
         );
-      })}
+      })} */}
     </>
   );
 };

@@ -2,16 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../store/GameContext";
 import * as Colyseus from "colyseus.js";
 import toast from "react-hot-toast";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../components/game.css";
 
-function Home() {
-  const { roomCode } = useParams();
+function CreateAsHost() {
   const { client, setClient, setRoom } = useContext(GameContext);
   const history = useHistory();
-  const [roomCodeInput, setRoomCodeInput] = useState(roomCode);
-  const [nameInput, setNameInput] = useState("");
-  const [isJoinDisabled, setIsJoinDisabled] = useState(false);
+  const [nameInput, setNameInput] = useState("player");
+  const [maxPlayersInput, setMaxPlayersInput] = useState(1);
+  const [isCreateDisabled, setIsCreateDisabled] = useState(false);
   const gameData = JSON.parse(localStorage.getItem("gameData"));
 
   useEffect(() => {
@@ -19,42 +18,12 @@ function Home() {
 
     const colyseusClient = createClient();
 
-    if (gameData && colyseusClient) {
-      colyseusClient
-        .reconnect(gameData.roomId, gameData.sessionId)
-        .then((room) => {
-          console.log("joined successfully", room);
-          if (isMounted) handleRoom(room);
-        })
-        .catch((e) => {
-          console.error("join error", e);
-          if (e?.message?.includes("session expired")) {
-            toast.error("session expired / game opened somewhere else");
-          } // clear if not able to join
-          else {
-            toast.error(e.message || "failed to join previous game");
-            localStorage.clear();
-          }
-        });
-    }
-
-    return () => (isMounted = false);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  function createClient() {
-    const colyseusClient = new Colyseus.Client(
-      "ws://localhost:2567"
-    );
-    setClient(colyseusClient);
-    console.log("client created", colyseusClient, client);
-
-    const gameData = JSON.parse(localStorage.getItem("gameData"));
     if (gameData) {
       colyseusClient
         .reconnect(gameData.roomId, gameData.sessionId)
         .then((room) => {
           console.log("joined successfully", room);
-          handleRoom(room);
+          if (isMounted) handleRoom(room);
         })
         .catch((e) => {
           console.error("join error", e);
@@ -68,6 +37,15 @@ function Home() {
           }
         });
     }
+
+    return () => (isMounted = false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function createClient() {
+    const colyseusClient = new Colyseus.Client("ws://localhost:2567");
+    setClient(colyseusClient);
+    console.log("client created", colyseusClient, client);
+    return colyseusClient;
   }
   function handleRoom(room) {
     setRoom(room);
@@ -80,29 +58,26 @@ function Home() {
     console.log(room.id, "room joined");
   }
 
-  function handleJoin(e) {
+  function handleCreate(e) {
     e.preventDefault();
-    setIsJoinDisabled(true);
+    setIsCreateDisabled(true);
     client
-      .joinById(roomCodeInput, {
-        username: nameInput,
-      })
+      .create("regular", { username: nameInput, maxClients: maxPlayersInput })
       .then(handleRoom)
       .catch((e) => {
-        console.log("JOIN ERROR", e);
-        toast.error(`${e.message || "failed to join room"}`);
+        console.log("JOIN ERROR from create", e);
+        toast.error(`${e.message || "failed to create room"}`);
       })
       .finally(() => {
-        setIsJoinDisabled(false);
+        setIsCreateDisabled(false);
       });
   }
-
   return (
     <div className="home mx-3">
-      <div>
+      <div className="homeCard">
         <div className="gameForm">
-          <div className="gameFormPlayerDetails form">
-            <label htmlFor="name" className="form-label">
+          <div className="gameFormPlayerDetails">
+            <label htmlFor="name" className="cr-label">
               Enter your name{" "}
             </label>
             <input
@@ -111,29 +86,29 @@ function Home() {
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               placeholder="player name"
-              className="form-control"
+              className="cr-input"
             />
           </div>
-          <div className="gameFormJoinRoom d-flex justify-content-around mt-4">
+          <div className="gameFormJoinRoom d-flex justify-content-around mt-5">
             <div className="w-100">
-              <label className="form-label" htmlFor="room-code">
-                Room Code
+              <label className="cr-label" htmlFor="max-players">
+                Max players
               </label>
               <input
-                id="room-code"
+                id="max-players"
                 type="text"
-                value={roomCodeInput}
-                onChange={(e) => setRoomCodeInput(e.target.value)}
-                className="form-control "
-                placeholder="enter code to join"
+                value={maxPlayersInput}
+                onChange={(e) => setMaxPlayersInput(e.target.value)}
+                className="cr-input"
+                placeholder="enter max number of players"
               />
               <button
-                disabled={isJoinDisabled}
-                onClick={handleJoin}
-                className="btn btn-sm btn-primary mt-3"
+                onClick={handleCreate}
+                className="mt-4 cr-btn"
+                disabled={isCreateDisabled}
               >
-                Join Room
-                {isJoinDisabled && (
+                Create Room
+                {isCreateDisabled && (
                   <>
                     <span
                       className="spinner-border spinner-border-sm ms-2"
@@ -152,4 +127,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default CreateAsHost;

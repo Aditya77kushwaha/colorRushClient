@@ -1,0 +1,26 @@
+.teamDiv {
+  padding: 0;
+  background-color: #777a7a;
+  height: 100%;
+}
+
+.teamDiv .teamHeader {
+  margin: 0.6vw 0.6vw;
+  padding: 3vw 1vw;
+  background-color: #474545;
+  color: blanchedalmond;
+  text-align: center;
+  cursor: pointer;
+}
+
+.teamDiv .players-list {
+  padding: 1vw 0.6vw;
+  color: #f5f5f5;
+  list-style-type: none;
+  list-style-position: outside;
+}
+
+.teamPageHeader {
+  background-color: #cecece;
+}
+/*# sourceMappingURL=team.css.map */

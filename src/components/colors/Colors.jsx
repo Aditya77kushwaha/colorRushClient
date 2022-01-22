@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { chooseColor } from "../../store/features/colorSlice";
 import "./colors.css";
+import { GameContext } from "../../store/GameContext";
 
-const Colors = () => {
+const Colors = ({ setHasHostChosenColor }) => {
   const chosenColor = useSelector((state) => state.colors.chosenColor);
   const colorOptions = useSelector((state) => state.colors.colorOptions);
   const dispatch = useDispatch();
+  const { room } = useContext(GameContext);
 
   const handleClick = (color) => {
+    setHasHostChosenColor(true);
     dispatch(chooseColor(color));
+    console.log("chosen color", color);
+    room.send("host-chosen-color", [color.h, color.s, color.v]);
   };
   return (
     <>

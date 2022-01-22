@@ -1,11 +1,28 @@
+.pickerScreen {
+  position: relative;
+  background: #000;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+.timer {
+  position: relative;
+  display: inline-block;
+  background: white;
+  padding: 0.5vw 3vw;
+}
+.colorDistance {
+  position: relative;
+  display: inline-block;
+  background: white;
+  margin-bottom: 2vw;
+  padding: 0.5vw 3vw;
+}
 .canvasContainer {
   position: relative;
 }
-
 .canvasContainer .picker-canvas {
   cursor: pointer;
 }
-
 .canvasContainer .marker {
   position: absolute;
   top: 0;
@@ -13,5 +30,96 @@
   width: 20px;
   height: 20px;
   background-color: #000;
+}
+.pickerHeadBar {
+  background-color: #0c9651;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  justify-self: center;
+  margin-left: 2.5vw;
+  margin-right: 2.5vw;
+  margin-bottom: 2.5vw;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+}
+.pickerHeadBar::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #0c9651;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+.pickerHeadBar::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #0c9651;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+  border: none;
+}
+.pickerHeadBar .cluesWord {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 0vw 4vw;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin-left: 0.633vw;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+.pickerHeadBar .cluesWord::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  -webkit-clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+          clip-path: polygon(50% 0%, 50% 100%, 0% 50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border: none;
+}
+.pickerHeadBar .cluesWord::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+  border: none;
+}
+.pickerHeadBar .pickerHints {
+  color: #fff;
 }
 /*# sourceMappingURL=picker.css.map */

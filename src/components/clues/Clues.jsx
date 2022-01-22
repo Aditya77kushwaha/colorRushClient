@@ -1,5 +1,6 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from "react";
+// import { useSelector } from "react-redux";
 import { GameContext } from "../../store/GameContext";
 import "./clues.css";
 
@@ -10,37 +11,42 @@ const Clues = ({
   setHints,
   givenHints,
   setGivenHints,
+  hostChosenColor,
+  host,
 }) => {
   const { room } = useContext(GameContext);
-  const chosenColor = useSelector((state) => state.colors.chosenColor);
-  // const [hintArray, setHintArray] = useState([]);
+  // const chosenColor = useSelector((state) => state.colors.chosenColor);
   const handleHintAdd = () => {
     console.log(hint);
-    // let len = hint.split(" ");
-    // len = len.filter((ele, pos, self) => {
-    //   return ele !== "";
-    // });
     if (
       hints.findIndex(
         (x) => x.trim().toUpperCase() === hint.trim().toUpperCase()
       ) === -1 &&
       hint.trim().toUpperCase().split(" ").length <= 3
     ) {
-      setHints((prevVal) => [...prevVal, hint.trim().toUpperCase()]);
+      // setHints((prevVal) => [...prevVal, hint.trim().toUpperCase()]);
+      room.send("new-hint", hint.trim().toUpperCase());
     }
-    // hintArray += hints.length !== 0 ? "," + hint : hint;
-    // setHintArray(
-    //   hints.map((val, ind) => {
-    //     return ind !== 0 ? val : "," + val;
-    //   })
-    // );
     setHint("");
   };
   const handleGiveHints = () => {
-    setHints(hints.filter((v, i, a) => a.indexOf(v) === i));
+    // setHints(hints.filter((v, i, a) => a.indexOf(v) === i));
     room.send("give-hints", hints);
     setGivenHints(!givenHints);
   };
+
+  useEffect(() => {
+    // room.onMessage("set-hints", (msg) => {
+    //   setHints(msg.hints);
+    // });
+    // room.state.onChange = (changes) => {
+    //   changes.forEach((change) => {
+    //     if (change.field === "hints") {
+    //       setHints((prevVal) => [...prevVal, change.value]);
+    //     }
+    //   });
+    // };
+  }, []);
   return (
     <>
       <div className="cluesScreen container">
@@ -65,7 +71,7 @@ const Clues = ({
           <div
             className="chosenColor"
             style={{
-              background: `hsl(${chosenColor.h}deg, ${chosenColor.s}%, ${chosenColor.v}%)`,
+              background: `hsl(${hostChosenColor?.color[0]}deg, ${hostChosenColor?.color[1]}%, ${hostChosenColor?.color[2]}%)`,
             }}
           ></div>
         </div>
@@ -87,9 +93,15 @@ const Clues = ({
                 </button>
               </div>
               <div className="col-12 col-sm-6 d-flex justify-content-end">
-                <button disabled={!hints.length} className="submitHintsBtn" onClick={handleGiveHints}>
-                  Submit
-                </button>
+                {room?.sessionId === host && (
+                  <button
+                    disabled={!hints.length}
+                    className="submitHintsBtn"
+                    onClick={handleGiveHints}
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
             </div>
           </div>

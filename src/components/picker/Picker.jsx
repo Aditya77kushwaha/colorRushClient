@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import { useSelector } from "react-redux";
-import myColorPickerImage from "../img/myColorPickerImage.png";
+import myColorPickerImage from "../images/myColorPickerImage.png";
 import "./picker.css";
 import { GameContext } from "../../store/GameContext";
 
-function Picker({ setScore, score }) {
+function Picker({ setScore, score, setGuessed, players, hostChosenColor }) {
   const { room } = useContext(GameContext);
 
   let ctx;
 
   const originalColor = useSelector((state) => state.colors.chosenColor);
-  const colorRef = useRef(null);
+  // const colorRef = useRef(null);
   const pickerRef = useRef(null);
   const markerRef = useRef(null);
   const [sizes, setSizes] = useState({
-    width: window.innerWidth,
+    width: window.innerWidth * 0.6,
     height: window.innerHeight,
   });
   const [distance, setDistance] = useState(180);
+  const [clicked, setClicked] = useState(false);
 
   const calcDst = (color) => {
     console.log(
@@ -26,9 +27,11 @@ function Picker({ setScore, score }) {
         Math.abs(360 - color.h - originalColor.h)
       )
     );
+    console.log("originalcolor", originalColor.h);
+    console.log("host chosen color", hostChosenColor?.color[0]);
     return Math.min(
-      Math.abs(color.h - originalColor.h),
-      Math.abs(360 - color.h - originalColor.h)
+      Math.abs(color.h - hostChosenColor?.color[0]),
+      Math.abs(360 - color.h - hostChosenColor?.color[0])
     );
   };
 
@@ -70,6 +73,8 @@ function Picker({ setScore, score }) {
   };
 
   const handleClick = (e) => {
+    setClicked(true);
+    room.send("rusher-guessed", players[room?.sessionId].username);
     ctx = pickerRef.current.getContext("2d");
     let bounding = pickerRef.current.getBoundingClientRect();
     let x = e.clientX - bounding.left;
@@ -79,16 +84,14 @@ function Picker({ setScore, score }) {
     let imgData = ctx.getImageData(x, y, 1, 1);
     let rgba = imgData.data;
     let hsv = rgbTohsv(rgba[0], rgba[1], rgba[2]);
-
     console.log(hsv);
     let sc = calcDst(hsv),
       scr;
-    if (sc < 10) scr = 3;
-    else if (sc >= 10 && sc < 20) scr = 2;
-    else if (sc >= 20 && sc < 30) scr = 1;
+    if (sc < 10) scr = 6;
+    else if (sc >= 10 && sc < 20) scr = 4;
+    else if (sc >= 20 && sc < 30) scr = 2;
     else if (sc >= 30) scr = 0;
     setDistance(sc);
-    setScore(scr);
     room.send("set-player-score", scr);
   };
   useEffect(() => {
@@ -102,8 +105,8 @@ function Picker({ setScore, score }) {
   }, []);
   return (
     <>
-      <div className="container">
-        <div className="d-flex">
+      <div className="pickerScreen container">
+        <div className="pickerHeadBar">
           {/* <div
             ref={colorRef}
             className="refColor"
@@ -115,17 +118,20 @@ function Picker({ setScore, score }) {
           ></div> */}
           <div className="colorDistance">
             {distance < 180 ? `${distance} hues far` : ""}
+            {/* {distance < 180 ? <Score distance={distance} /> : ""} */}
           </div>
         </div>
         <div className="canvasContainer">
+          {/* <button disabled={clicked}> */}
           <canvas
-            className="picker-canvas"
-            width={sizes.width * 0.6}
-            height={sizes.width * 0.3}
+            aria-disabled={clicked}
+            className="picker-canvas"width={sizes.width}
+            height={(sizes.width * 1080) / 1920}
             ref={pickerRef}
-            onClick={(e) => handleClick(e)}
+            onClick={(e) => !clicked && handleClick(e)}
             style={{ border: "1px solid black" }}
           ></canvas>
+          {/* </button> */}
           <div ref={markerRef} className="marker"></div>
         </div>
       </div>

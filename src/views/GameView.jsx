@@ -13,18 +13,22 @@ const GameView = () => {
   const { room, setRoom } = useContext(GameContext);
   const [players, setPlayers] = useState({});
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [hasEveryoneJoined, setHasEveryoneJoined] = useState(false);
+  // const [hasEveryoneJoined, setHasEveryoneJoined] = useState(false);
   const [host, setHost] = useState(null);
-  const [roundLimit, setRoundLimit] = useState(2);
+  // const [roundLimit, setRoundLimit] = useState(2);
   const [timeLimit, setTimeLimit] = useState(3);
   const [teamLimit, setTeamLimit] = useState(2);
-  const [rusherPerTeamLimit, setRusherPerTeamLimit] = useState(1);
+  const [rusherPerTeamLimit, setRusherPerTeamLimit] = useState(2);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [hasTeamsFormed, setHasTeamsFormed] = useState(false);
   const [teamsData, setTeamsData] = useState({});
   const [teamsName, setTeamsName] = useState("");
   const [score, setScore] = useState(0);
+  const [rushers, setRushers] = useState([]);
+  const [clueGivers, setClueGivers] = useState([]);
+  const [gameEndDetails, setGameEndDetails] = useState(null);
+  const [round, setRound] = useState(1);
 
   function copyRoomCode() {
     const input = document.createElement("input");
@@ -55,12 +59,15 @@ const GameView = () => {
       console.log(msg);
       setTeamsData(msg);
     });
-    room.onMessage("everyone-joined", (msg) => {
-      setHasEveryoneJoined(true);
+    room.onMessage("form-clueGivers", (msg) => {
+      setClueGivers(msg.clueGivers);
     });
-    room.onMessage("someone-left", (msg) => {
-      setHasEveryoneJoined(false);
-    });
+    // room.onMessage("everyone-joined", (msg) => {
+    //   setHasEveryoneJoined(true);
+    // });
+    // room.onMessage("someone-left", (msg) => {
+    //   setHasEveryoneJoined(false);
+    // });
     room.state.messages.onAdd = (msg, length) => {
       // console.log(x, y);
       console.log(msg);
@@ -89,7 +96,7 @@ const GameView = () => {
               // console.log(client.id, sessionId);
               setTeamsName(change.value);
             }
-            if (change.field === "score") {
+            if (change.field === "score" && sessionId === room.sessionId) {
               setScore(change.value);
             }
             return newPlayersState;
@@ -130,37 +137,45 @@ const GameView = () => {
       toast.error(message || "500 internal server error");
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const handleRoundInc = () => {
-    room.send("round-limit", Number(roundLimit) + 1);
-    setRoundLimit((prevVal) => prevVal + 1);
-  };
-  const handleRoundDec = () => {
-    room.send("round-limit", Number(roundLimit) - 1);
-    setRoundLimit((prevVal) => prevVal - 1);
-  };
+  // const handleRoundInc = () => {
+  //   room.send("round-limit", Number(roundLimit) + 1);
+  //   setRoundLimit((prevVal) => prevVal + 1);
+  // };
+  // const handleRoundDec = () => {
+  //   if (Number(roundLimit) > 0) {
+  //     room.send("round-limit", Number(roundLimit) - 1);
+  //     setRoundLimit((prevVal) => prevVal - 1);
+  //   }
+  // };
   const handleTimeInc = () => {
     room.send("time-limit", Number(timeLimit) + 1);
     setTimeLimit((prevVal) => prevVal + 1);
   };
   const handleTimeDec = () => {
-    room.send("time-limit", Number(timeLimit) - 1);
-    setTimeLimit((prevVal) => prevVal - 1);
+    if (Number(timeLimit) > 0) {
+      room.send("time-limit", Number(timeLimit) - 1);
+      setTimeLimit((prevVal) => prevVal - 1);
+    }
   };
   const handleTeamInc = () => {
     room.send("team-limit", Number(teamLimit) + 1);
     setTeamLimit((prevVal) => prevVal + 1);
   };
   const handleTeamDec = () => {
-    room.send("team-limit", Number(teamLimit) - 1);
-    setTeamLimit((prevVal) => prevVal - 1);
+    if (Number(teamLimit) > 0) {
+      room.send("team-limit", Number(teamLimit) - 1);
+      setTeamLimit((prevVal) => prevVal - 1);
+    }
   };
   const handleRusherPerTeamInc = () => {
     room.send("rusherPerTeam-limit", Number(rusherPerTeamLimit) + 1);
     setRusherPerTeamLimit((prevVal) => prevVal + 1);
   };
   const handleRusherPerTeamDec = () => {
-    room.send("rusherPerTeam-limit", Number(rusherPerTeamLimit) - 1);
-    setRusherPerTeamLimit((prevVal) => prevVal - 1);
+    if (Number(rusherPerTeamLimit) > 0) {
+      room.send("rusherPerTeam-limit", Number(rusherPerTeamLimit) - 1);
+      setRusherPerTeamLimit((prevVal) => prevVal - 1);
+    }
   };
   const handleSend = () => {
     console.log("send message");
@@ -196,13 +211,16 @@ const GameView = () => {
                   </p>
                 </>
               )}
+              <p className="me-2">
+                <b>Round :</b> {round}
+              </p>
               <div
                 className={
                   room?.sessionId === host && !isGameStarted ? "show" : "hide"
                 }
               >
                 <button
-                  disabled={!hasEveryoneJoined}
+                  // disabled={!hasEveryoneJoined}
                   className="btn btn-sm btn-primary mt-1 mb-1"
                   onClick={() => {
                     handleGameStart();
@@ -217,7 +235,7 @@ const GameView = () => {
                 room?.sessionId === host && !isGameStarted ? "show" : "hide"
               }`}
             >
-              <p>Maximum Rounds</p>
+              {/* <p>Maximum Rounds</p>
               <p>
                 <button onClick={handleRoundInc}>
                   <FiPlus />
@@ -236,7 +254,7 @@ const GameView = () => {
                 <button onClick={handleRoundDec}>
                   <FiMinus />
                 </button>
-              </p>
+              </p> */}
               <p>Maximum Time for each Round</p>
               <p>
                 <button onClick={handleTimeInc}>
@@ -277,7 +295,7 @@ const GameView = () => {
                   <FiMinus />
                 </button>
               </p>
-              <p>Maximum Rushers per team</p>
+              <p>Maximum Players per team</p>
               <p>
                 <button onClick={handleRusherPerTeamInc}>
                   <FiPlus />
@@ -303,7 +321,17 @@ const GameView = () => {
           </div>
           {isGameStarted &&
             (hasTeamsFormed ? (
-              <Game host={host} setScore={setScore} score={score} />
+              <Game
+                host={host}
+                setScore={setScore}
+                score={score}
+                players={players}
+                rushers={rushers}
+                setGameEndDetails={setGameEndDetails}
+                gameEndDetails={gameEndDetails}
+                round={round}
+                setRound={setRound}
+              />
             ) : (
               <Team
                 hasTeamsFormed={hasTeamsFormed}
@@ -314,6 +342,10 @@ const GameView = () => {
                 players={players}
                 setPlayers={setPlayers}
                 setTeamsName={setTeamsName}
+                rushers={rushers}
+                setRushers={setRushers}
+                clueGivers={clueGivers}
+                setClueGivers={setClueGivers}
               />
             ))}
         </div>
