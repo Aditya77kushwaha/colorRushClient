@@ -43,7 +43,7 @@ function Home() {
 
   function createClient() {
     const colyseusClient = new Colyseus.Client(
-      "ws://localhost:2567"
+      "wss://color-rush-backend.herokuapp.com/"
     );
     setClient(colyseusClient);
     console.log("client created", colyseusClient, client);

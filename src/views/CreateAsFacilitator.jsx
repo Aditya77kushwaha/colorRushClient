@@ -46,7 +46,9 @@ function CreateAsFacilitator() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function createClient() {
-    const colyseusClient = new Colyseus.Client("ws://localhost:2567");
+    const colyseusClient = new Colyseus.Client(
+      "wss://color-rush-backend.herokuapp.com/"
+    );
     setClient(colyseusClient);
     console.log("client created", colyseusClient, client);
     return colyseusClient;
