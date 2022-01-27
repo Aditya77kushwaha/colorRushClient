@@ -32,13 +32,6 @@ const Colors = ({ setHasHostChosenColor }) => {
                 className="colorOption"
                 style={{
                   backgroundColor: `hsl(${color.h}deg,${color.s}%,${color.v}%)`,
-                  border: `${
-                    chosenColor === color
-                      ? `2vw solid hsl(${color.h}deg,${color.s + 10}%,${
-                          color.v - 30
-                        }%)`
-                      : "none"
-                  }`,
                   boxShadow: `${
                     chosenColor === color
                       ? "3px 6px 16px rgba(0,0,0,0.5)"

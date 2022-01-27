@@ -2,34 +2,42 @@ body {
   font-family: "Poppins", sans-serif;
   background: url("../components/images/Background.svg");
 }
+
 .game {
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
 }
+
 .room-code {
   cursor: pointer;
 }
+
 .leave-btn {
   position: relative;
   z-index: 10;
 }
+
 .player-color-block {
   vertical-align: middle;
   display: inline-block;
   width: 20px;
   height: 20px;
 }
+
 .disconnected {
   -webkit-filter: grayscale(100%);
           filter: grayscale(100%);
 }
+
 .show {
   display: block;
 }
+
 .hide {
   display: none;
 }
+
 .toggle {
   top: 10px;
   float: right;
@@ -37,14 +45,17 @@ body {
   margin: 10px;
   z-index: 1000;
 }
+
 .wrapper {
   position: relative;
 }
+
 .players {
   position: absolute;
   top: 100px;
   right: 0;
 }
+
 .cr-btn {
   border: none;
   padding: 0.3vw 2vw;
@@ -55,17 +66,20 @@ body {
   background-repeat: no-repeat;
   aspect-ratio: 3/1;
 }
+
 .cr-input {
   position: relative;
   display: block;
   width: 100%;
   padding: 0.7vw 1vw;
 }
+
 .cr-input-var-group {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
+
 .cr-input-var-group .cr-minus-btn {
   border: none;
   padding: 0.3vw 2vw;
@@ -79,6 +93,7 @@ body {
           transform: translateX(50%);
   z-index: 2;
 }
+
 .cr-input-var-group .cr-plus-btn {
   border: none;
   padding: 0.3vw 2vw;
@@ -91,6 +106,7 @@ body {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+
 .cr-input-var-group .cr-input-var {
   position: relative;
   display: block;
@@ -103,6 +119,7 @@ body {
   color: whitesmoke;
   font-size: 24px;
 }
+
 .cr-label {
   width: 10vw;
   text-align: center;
@@ -116,10 +133,12 @@ body {
   background-repeat: no-repeat;
   aspect-ratio: 8.5/1;
 }
+
 .cr-stick-label {
   -webkit-transform: translate(3.9rem, -4.7rem);
           transform: translate(3.9rem, -4.7rem);
 }
+
 .home {
   display: -ms-grid;
   display: grid;
@@ -130,50 +149,61 @@ body {
   bottom: 0;
   width: 100vw;
 }
+
 .homeCard {
   display: -ms-grid;
   display: grid;
   place-items: center;
 }
+
 .gameForm {
   width: 57vw;
   background-color: #262626;
   padding: 5.34vw 8.9vw;
 }
+
 .gameForm .form-label {
   color: #eeeeee;
 }
+
 .hostControlsContainer {
   display: -ms-grid;
   display: grid;
   place-items: center;
   padding: 3vw;
 }
+
 .hostControlsContainer .hostControls {
   background-color: #262626;
   padding: 5.34vw 8.9vw;
   width: 57vw;
 }
+
 .gameCodeGroup {
   position: relative;
 }
+
 .gameCodeGroup .gameCodeLabel {
   margin-left: 2.4rem;
 }
+
 .gameCodeGroup .gameCodeInput {
   width: 23.4rem;
   margin: 0 1rem 0 2.4rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+
 .markers {
   display: -ms-grid;
   display: grid;
   place-items: center;
 }
+
 .markers .d-flex {
   width: 50px;
 }
+
 .markers .marker .markerNo {
   width: 50px;
   border: 1px solid black;
@@ -181,6 +211,7 @@ body {
   font-size: 8px;
   text-align: center;
 }
+
 .markers .marker .markTriangle {
   width: 0;
   height: 0;

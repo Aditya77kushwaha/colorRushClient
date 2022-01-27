@@ -130,7 +130,7 @@ function Home() {
               <button
                 disabled={isJoinDisabled}
                 onClick={handleJoin}
-                className="btn btn-sm btn-primary mt-3"
+                className="mt-4 cr-btn"
               >
                 Join Room
                 {isJoinDisabled && (

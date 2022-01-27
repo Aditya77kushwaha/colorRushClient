@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { GameContext } from "../store/GameContext";
 import Clues from "./clues/Clues";
 import Colors from "./colors/Colors.jsx";
 import Picker from "./picker/Picker";
 import GameOver from "../components/GameOver";
 // import { reset } from "../store/features/colorSlice";
-import "./picker/picker.css"
+import "./picker/picker.css";
+import { reset } from "../store/features/colorSlice";
 
 const Game = ({
   host,
@@ -36,7 +37,7 @@ const Game = ({
     minutes: "00",
     seconds: "00",
   });
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     room.onMessage("set-hints", (msg) => {
@@ -146,6 +147,7 @@ const Game = ({
                     className="btn btn-sm btn-primary"
                     onClick={() => {
                       room.send("play-again");
+                      dispatch(reset());
                     }}
                   >
                     Play Again
@@ -188,10 +190,11 @@ const Game = ({
                 givenHints && <h3>Guess the color</h3>
               )}
               {givenHints && (
-                  <h3 className="pickerHints">
+                <h3 className="pickerHints">
                   {hints.map((val, id) => {
                     return typeof val === "string" && val + ",";
-                  })}</h3>
+                  })}
+                </h3>
               )}
               {!room?.state.rushers.includes(
                 room?.state.players[room?.sessionId].username

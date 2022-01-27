@@ -5,6 +5,7 @@ import { GameContext } from "../store/GameContext";
 import Game from "../components/Game";
 import { useHistory } from "react-router-dom";
 import Team from "../components/Team";
+import "../components/game.css";
 
 // Game settings will be done here
 const GameView = () => {
@@ -219,15 +220,15 @@ const GameView = () => {
                   room?.sessionId === host && !isGameStarted ? "show" : "hide"
                 }
               >
-                <button
+                {/* <button
                   // disabled={!hasEveryoneJoined}
-                  className="btn btn-sm btn-primary mt-1 mb-1"
+                  className="mt-4 cr-btn"
                   onClick={() => {
                     handleGameStart();
                   }}
                 >
                   Start Game
-                </button>
+                </button> */}
               </div>
             </div>
             <div
@@ -317,6 +318,15 @@ const GameView = () => {
                   <FiMinus />
                 </button>
               </p>
+              <button
+                // disabled={!hasEveryoneJoined}
+                className="mt-4 cr-btn"
+                onClick={() => {
+                  handleGameStart();
+                }}
+              >
+                Start Game
+              </button>
             </div>
           </div>
           {isGameStarted &&

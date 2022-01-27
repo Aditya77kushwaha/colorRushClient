@@ -4,12 +4,14 @@
   padding-top: 2vw;
   padding-bottom: 2vw;
 }
+
 .timer {
   position: relative;
   display: inline-block;
   background: white;
   padding: 0.5vw 3vw;
 }
+
 .colorDistance {
   position: relative;
   display: inline-block;
@@ -17,12 +19,15 @@
   margin-bottom: 2vw;
   padding: 0.5vw 3vw;
 }
+
 .canvasContainer {
   position: relative;
 }
+
 .canvasContainer .picker-canvas {
   cursor: pointer;
 }
+
 .canvasContainer .marker {
   position: absolute;
   top: 0;
@@ -31,6 +36,7 @@
   height: 20px;
   background-color: #000;
 }
+
 .pickerHeadBar {
   background-color: #0c9651;
   display: -webkit-box;
@@ -49,6 +55,7 @@
   padding-top: 1vw;
   padding-bottom: 1vw;
 }
+
 .pickerHeadBar::before {
   content: "";
   position: absolute;
@@ -63,6 +70,7 @@
           transform: translateX(-50%);
   border: none;
 }
+
 .pickerHeadBar::after {
   content: "";
   position: absolute;
@@ -77,6 +85,7 @@
           transform: translateX(50%);
   border: none;
 }
+
 .pickerHeadBar .cluesWord {
   position: absolute;
   top: 0;
@@ -91,6 +100,7 @@
   letter-spacing: 6px;
   text-transform: uppercase;
 }
+
 .pickerHeadBar .cluesWord::before {
   content: "";
   position: absolute;
@@ -105,6 +115,7 @@
           transform: translateX(-50%);
   border: none;
 }
+
 .pickerHeadBar .cluesWord::after {
   content: "";
   position: absolute;
@@ -119,6 +130,7 @@
           transform: translateX(50%);
   border: none;
 }
+
 .pickerHeadBar .pickerHints {
   color: #fff;
 }
