@@ -215,27 +215,210 @@ const GameView = () => {
               <p className="me-2">
                 <b>Round :</b> {round}
               </p>
-              <div
+              {/* <div
                 className={
                   room?.sessionId === host && !isGameStarted ? "show" : "hide"
                 }
               >
-                {/* <button
+                <button
                   // disabled={!hasEveryoneJoined}
-                  className="mt-4 cr-btn"
+                  className="btn btn-sm btn-primary mt-1 mb-1"
                   onClick={() => {
                     handleGameStart();
                   }}
                 >
                   Start Game
-                </button> */}
-              </div>
+                </button>
+              </div> */}
             </div>
             <div
               className={`${
                 room?.sessionId === host && !isGameStarted ? "show" : "hide"
               }`}
             >
+              <div className="hostControlsContainer">
+                <div className="hostControls">
+                  <div className="row">
+                    {/* <div className="col-6">
+                      <div className="cr-input-var-group mb-3">
+                        <button
+                          onClick={handleTimeInc}
+                          className="cr-minus-btn"
+                        ></button>
+
+                        <input
+                          type="text"
+                          className="cr-input-var"
+                          value={timeLimit}
+                          onChange={(e) => {
+                            setTimeLimit(
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                            room.send(
+                              "time-limit",
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                          }}
+                        />
+                        <button
+                          onClick={handleTimeDec}
+                          className="cr-plus-btn"
+                        ></button>
+                      </div>
+                      <label
+                        htmlFor="rounds"
+                        className="cr-label cr-stick-label"
+                      >
+                        Time for each Round
+                      </label>
+                    </div> */}
+                    <div className="col-6">
+                      <div className="cr-input-var-group mb-3">
+                        <button
+                          onClick={handleTimeDec}
+                          className="cr-minus-btn"
+                        ></button>
+                        <input
+                          type="text"
+                          className="cr-input-var"
+                          value={timeLimit}
+                          onChange={(e) => {
+                            setTimeLimit(
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                            room.send(
+                              "time-limit",
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                          }}
+                        />
+                        <button
+                          onClick={handleTimeInc}
+                          className="cr-plus-btn"
+                        ></button>
+                      </div>
+                      <label htmlFor="time" className="cr-label cr-stick-label">
+                        Time
+                      </label>
+                    </div>
+                    <div className="col-6">
+                      <div className="cr-input-var-group mb-3">
+                        <button
+                          onClick={handleTeamDec}
+                          className="cr-minus-btn"
+                        ></button>
+                        <input
+                          type="text"
+                          className="cr-input-var"
+                          value={teamLimit}
+                          onChange={(e) => {
+                            room.send(
+                              "team-limit",
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                            setTeamLimit(
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                          }}
+                        />
+                        <button
+                          onClick={handleTeamInc}
+                          className="cr-plus-btn"
+                        ></button>
+                      </div>
+                      <label
+                        htmlFor="teams"
+                        className="cr-label cr-stick-label"
+                      >
+                        Teams
+                      </label>
+                    </div>
+                    <div className="col-6">
+                      <div className="cr-input-var-group mb-3">
+                        <button
+                          onClick={handleRusherPerTeamDec}
+                          className="cr-minus-btn"
+                        ></button>
+                        <input
+                          type="text"
+                          className="cr-input-var"
+                          value={rusherPerTeamLimit}
+                          onChange={(e) => {
+                            room.send(
+                              "rusherPerTeam-limit",
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                            setRusherPerTeamLimit(
+                              e.target.value ? Number(e.target.value) : 0
+                            );
+                          }}
+                        />
+                        <button
+                          onClick={handleRusherPerTeamInc}
+                          className="cr-plus-btn"
+                        ></button>
+                      </div>
+                      <label
+                        htmlFor="rushers"
+                        className="cr-label cr-stick-label"
+                      >
+                        Rushers
+                      </label>
+                    </div>
+                  </div>
+                  {/* <div className="markers text-light">
+                    <div className="d-flex">
+                      <div className="marker">
+                        <div className="markerNo">1</div>
+                        <div className="markTriangle"></div>
+                      </div>
+                      <div className="marker">
+                        <div className="markerNo">2</div>
+                        <div className="markTriangle"></div>
+                      </div>
+                    </div>
+                  </div> */}
+                  {/* <div className="gameCodeGroup mt-3">
+                    <label
+                      htmlFor="gameCode"
+                      className="cr-label gameCodeLabel"
+                    >
+                      Game Code
+                    </label>
+                    <div className="d-flex">
+                      <div>
+                        <input
+                          type="text"
+                          name="gameCode"
+                          className="cr-input gameCodeInput"
+                        />
+                      </div>
+                      <div>
+                        <button className="cr-btn">Create Code</button>
+                      </div>
+                    </div>
+                  </div> */}
+                  <div
+                    className={
+                      room?.sessionId === host && !isGameStarted
+                        ? "show"
+                        : "hide"
+                    }
+                  >
+                    <div className="text-center mt-5">
+                      <button
+                        // disabled={!hasEveryoneJoined}
+                        className="cr-btn"
+                        onClick={() => {
+                          handleGameStart();
+                        }}
+                      >
+                        Next Page
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {/* <p>Maximum Rounds</p>
               <p>
                 <button onClick={handleRoundInc}>
@@ -256,7 +439,7 @@ const GameView = () => {
                   <FiMinus />
                 </button>
               </p> */}
-              <p>Maximum Time for each Round</p>
+              {/* <p>Maximum Time for each Round</p>
               <p>
                 <button onClick={handleTimeInc}>
                   <FiPlus />
@@ -317,16 +500,7 @@ const GameView = () => {
                 <button onClick={handleRusherPerTeamDec}>
                   <FiMinus />
                 </button>
-              </p>
-              <button
-                // disabled={!hasEveryoneJoined}
-                className="mt-4 cr-btn"
-                onClick={() => {
-                  handleGameStart();
-                }}
-              >
-                Start Game
-              </button>
+              </p> */}
             </div>
           </div>
           {isGameStarted &&

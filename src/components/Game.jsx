@@ -245,6 +245,7 @@ const Game = ({
               setGuessed={setGuessed}
               players={players}
               hostChosenColor={hostChosenColor}
+              timeDisplay={timeDisplay}
             />
           ) : (
             ""
